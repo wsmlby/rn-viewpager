@@ -12,6 +12,7 @@ var {
   PanResponder,
   Animated,
   StyleSheet,
+  Platform,
 } = ReactNative;
 
 var StaticRenderer = require('react-native/Libraries/Components/StaticRenderer');
@@ -77,10 +78,16 @@ var ViewPager = React.createClass({
           //lastPageIndex = this.props.children.length - 1,
           vx = gestureState.vx;
 
+      var dxCap = 0.15;
+
+      if (Platform.OS === 'ios') {
+        dxCap = 0;
+      }
+      
       var step = 0;
-      if (relativeGestureDistance < -0.5 || (relativeGestureDistance < 0 && vx <= -1e-6)) {
+      if (relativeGestureDistance < -0.5 || (relativeGestureDistance < -dxCap && vx <= -1e-6)) {
         step = 1;
-      } else if (relativeGestureDistance > 0.5 || (relativeGestureDistance > 0 && vx >= 1e-6)) {
+      } else if (relativeGestureDistance > 0.5 || (relativeGestureDistance > dxCap && vx >= 1e-6)) {
         step = -1;
       }
 
