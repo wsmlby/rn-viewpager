@@ -83,7 +83,7 @@ var ViewPager = React.createClass({
       if (Platform.OS === 'ios') {
         dxCap = 0;
       }
-      
+
       var step = 0;
       if (relativeGestureDistance < -0.5 || (relativeGestureDistance < -dxCap && vx <= -1e-6)) {
         step = 1;
@@ -99,7 +99,7 @@ var ViewPager = React.createClass({
     this._panResponder = PanResponder.create({
       // Claim responder if it's a horizontal pan
       onMoveShouldSetPanResponder: (e, gestureState) => {
-        if (Math.abs(gestureState.dx) > Math.abs(gestureState.dy)) {
+        if (Math.abs(gestureState.dx) > Math.abs(gestureState.dy) && Math.abs(gestureState.dx)/deviceWidth > 0.01) {
           if (/* (gestureState.moveX <= this.props.edgeHitWidth ||
               gestureState.moveX >= deviceWidth - this.props.edgeHitWidth) && */
                 this.props.locked !== true && !this.fling) {
