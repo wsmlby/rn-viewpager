@@ -34,6 +34,7 @@ var ViewPager = createReactClass({
     ...View.propTypes,
     dataSource: PropTypes.instanceOf(ViewPagerDataSource).isRequired,
     renderPage: PropTypes.func.isRequired,
+    willChangePage: PropTypes.func,
     onChangePage: PropTypes.func,
     renderPageIndicator: PropTypes.oneOfType([
       PropTypes.func,
@@ -212,6 +213,7 @@ var ViewPager = createReactClass({
 
     if (animate) {
       this.fling = true;
+      moved && this.props.willChangePage && this.props.willChangePage(pageNumber);
       this.props.animation(this.state.scrollValue, scrollStep, gs)
         .start((event) => {
           if (event.finished) {
